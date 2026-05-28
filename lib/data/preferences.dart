@@ -44,8 +44,12 @@ class AppPreferences {
     await _prefs.setInt('total_interceptions', totalInterceptions + 1);
   }
 
+  static int get totalSecondsSaved => _prefs.getInt('total_seconds_saved') ?? 0;
+  static int get totalMinutesSaved => totalSecondsSaved ~/ 60;
+
   static Future<void> logChangedMind() async {
     await _prefs.setInt('total_changed_mind', totalChangedMind + 1);
+    await _prefs.setInt('total_seconds_saved', totalSecondsSaved + delaySeconds);
     await incrementStreak();
   }
 

@@ -33,8 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() => _isEnabled = value);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content:
-            Text(value ? '🛡️ MindGate Activated!' : 'MindGate Deactivated'),
+        content: Text(
+            value ? '🛡️ MindGate Activate ho gaya!' : 'MindGate Band kar diya'),
         backgroundColor: value ? AppColors.success : AppColors.textMuted,
       ),
     );
@@ -52,8 +52,19 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.of(context).pushNamed('/intervention');
   }
 
+  String _formatTimeSaved(int minutes) {
+    if (minutes < 1) return '< 1 min';
+    if (minutes < 60) return '$minutes min';
+    final h = minutes ~/ 60;
+    final m = minutes % 60;
+    return m > 0 ? '${h}h ${m}m' : '${h}h';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final streak = AppPreferences.streak;
+    final minutesSaved = AppPreferences.totalMinutesSaved;
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -61,27 +72,70 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
 
-              // Header
-              const Text('🧠', style: TextStyle(fontSize: 56)),
-              const SizedBox(height: 8),
-              const Text(
-                'MindGate',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
-                ),
+              // Greeting + Header
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        Constants.getTimeGreeting(),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: AppColors.textSubtle,
+                        ),
+                      ),
+                      const Text(
+                        'MindGate 🧠',
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      Text(
+                        Constants.getMotivationalLevel(streak),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.accent,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Time saved badge
+                  if (minutesSaved > 0)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: AppColors.success.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                            color: AppColors.success.withValues(alpha: 0.3)),
+                      ),
+                      child: Column(
+                        children: [
+                          const Text('⏱️ Saved',
+                              style: TextStyle(
+                                  fontSize: 11, color: AppColors.textSubtle)),
+                          Text(
+                            _formatTimeSaved(minutesSaved),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.success,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
               ),
-              const Text(
-                'Think Before You Scroll',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: AppColors.textSubtle,
-                ),
-              ),
-              const SizedBox(height: 28),
+              const SizedBox(height: 20),
 
               // Protection toggle
               Container(
@@ -121,7 +175,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _isEnabled ? 'Protection Active' : 'Protection Off',
+                            _isEnabled
+                                ? 'Protection Active'
+                                : 'Protection Band Hai',
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -130,8 +186,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             _isEnabled
-                                ? 'Guarding your focus'
-                                : 'Tap to activate',
+                                ? 'Focus guard kar raha hai 🛡️'
+                                : 'Activate karo — shuru karo!',
                             style: const TextStyle(
                               fontSize: 13,
                               color: AppColors.textSubtle,
@@ -164,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text('⏱️', style: TextStyle(fontSize: 20)),
                         SizedBox(width: 8),
                         Text(
-                          'Delay Duration',
+                          'Pause Duration',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -172,6 +228,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      'Jitna lamba pause, utna zyaada sochne ka time',
+                      style:
+                          TextStyle(fontSize: 12, color: AppColors.textSubtle),
                     ),
                     const SizedBox(height: 16),
                     Slider(
@@ -183,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Center(
                       child: Text(
-                        '$_delaySeconds second${_delaySeconds > 1 ? 's' : ''}',
+                        '$_delaySeconds second${_delaySeconds > 1 ? 's' : ''} ka pause',
                         style: const TextStyle(
                           fontSize: 16,
                           color: AppColors.accent,
@@ -211,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text('📊', style: TextStyle(fontSize: 20)),
                         SizedBox(width: 8),
                         Text(
-                          'Your Stats',
+                          'Tumhara Progress',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -229,14 +291,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 8),
                     StatCard(
                       icon: '✅',
-                      label: 'Changed Your Mind',
+                      label: 'Mann Badla (Go Back)',
                       value: '${AppPreferences.totalChangedMind}',
                       valueColor: AppColors.success,
                     ),
                     const SizedBox(height: 8),
                     StatCard(
                       icon: '📱',
-                      label: 'Proceeded',
+                      label: 'Instagram Khola',
                       value: '${AppPreferences.totalProceeded}',
                       valueColor: AppColors.danger,
                     ),
@@ -252,8 +314,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     StatCard(
                       icon: '🔥',
                       label: 'Current Streak',
-                      value: '${AppPreferences.streak}',
+                      value: '$streak',
                       valueColor: AppColors.accent,
+                    ),
+                    const SizedBox(height: 8),
+                    StatCard(
+                      icon: '⏱️',
+                      label: 'Time Bachaya',
+                      value: _formatTimeSaved(minutesSaved),
+                      valueColor: AppColors.success,
                     ),
                   ],
                 ),
@@ -267,7 +336,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ElevatedButton.icon(
                   onPressed: _simulateInterception,
                   icon: const Icon(Icons.play_arrow_rounded),
-                  label: const Text('Test Intervention Screen'),
+                  label: const Text('Intervention Screen Test Karo'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.info,
                     shape: RoundedRectangleBorder(

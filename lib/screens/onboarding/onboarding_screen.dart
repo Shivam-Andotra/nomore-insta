@@ -16,27 +16,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final _pages = const [
     {
       'icon': '🧠',
-      'title': 'Welcome to MindGate',
-      'desc': 'Your companion to break Instagram addiction.\n'
-          'We create a moment of pause before you scroll.'
+      'title': 'MindGate mein Swagat!',
+      'desc': 'India mein 500M+ log Instagram use karte hain.\n'
+          'Tum apne time ke malik bano — MindGate help karega.'
     },
     {
       'icon': '⏱️',
-      'title': 'The Power of a Pause',
-      'desc': 'When you open Instagram, MindGate shows a\n'
-          'calming screen. Just 1 second breaks the habit.'
+      'title': 'Ek Pause — Badi Taakat',
+      'desc': 'Instagram kholne se pehle MindGate ek\n'
+          'pause deta hai. Sirf 1 second habit todne ke liye kaafi hai.'
     },
     {
       'icon': '📊',
-      'title': 'Track Your Growth',
-      'desc': 'See your progress, build streaks, and watch\n'
-          'your mindfulness score rise every day.'
+      'title': 'Apna Growth Dekho',
+      'desc': 'Streak banao, mindfulness score badhao,\n'
+          'aur dekho kitna time bachaya tumne!'
     },
     {
       'icon': '🚀',
-      'title': 'Ready to Start?',
-      'desc': 'Enable protection and take control of\n'
-          'your Instagram usage. You\'ve got this!'
+      'title': 'Shuru Karo — Abhi!',
+      'desc': 'Protection on karo aur apne\n'
+          'Instagram use ko control karo. Tum kar sakte ho! 💪'
     },
   ];
 
@@ -127,7 +127,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: ElevatedButton(
                   onPressed: _next,
                   child: Text(
-                    _page == _pages.length - 1 ? 'Get Started 🚀' : 'Next →',
+                    _page == _pages.length - 1 ? 'Shuru Karo 🚀' : 'Aage →',
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
