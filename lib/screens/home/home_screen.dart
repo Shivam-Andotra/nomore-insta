@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     color: _isEnabled
-                        ? AppColors.primary.withOpacity(0.3)
+                        ? AppColors.primary.withValues(alpha: 0.3)
                         : Colors.transparent,
                   ),
                 ),
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: _isEnabled
-                            ? AppColors.primary.withOpacity(0.1)
+                            ? AppColors.primary.withValues(alpha: 0.1)
                             : AppColors.surfaceLight,
                         borderRadius: BorderRadius.circular(12),
                       ),

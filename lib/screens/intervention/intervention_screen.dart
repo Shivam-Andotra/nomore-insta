@@ -120,14 +120,14 @@ class _InterventionScreenState extends State<InterventionScreen> {
                   borderRadius: BorderRadius.circular(16),
                   gradient: LinearGradient(
                     colors: [
-                      AppColors.primary.withOpacity(0.1),
-                      AppColors.info.withOpacity(0.1),
+                      AppColors.primary.withValues(alpha: 0.1),
+                      AppColors.info.withValues(alpha: 0.1),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.1),
+                    color: Colors.white.withValues(alpha: 0.1),
                   ),
                 ),
                 child: Text(
@@ -226,7 +226,7 @@ class _InterventionScreenState extends State<InterventionScreen> {
                       fontSize: 14,
                       color: _canProceed
                           ? AppColors.textMuted
-                          : AppColors.textMuted.withOpacity(0.3),
+                          : AppColors.textMuted.withValues(alpha: 0.3),
                     ),
                   ),
                 ),
